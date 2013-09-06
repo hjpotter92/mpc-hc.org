@@ -16,81 +16,6 @@ var buildDir = rootDir + "build/";
 var buildTarget = buildDir + "website/";
 var srcDir = rootDir + "source/";
 
-
-function writeText(file, text) {
-    var content = fs.writeFileSync(file, text, "utf-8");
-    return content;
-}
-
-
-function minify() {
-    var cleanCSS = require("clean-css");
-    var uglifyJS = require("uglify-js");
-
-    cd(srcDir);
-
-    echo();
-    echo("### Combining css files...");
-
-    // pack.css
-    var inCss = cat(["_static/css/bootstrap.css",
-                     "_static/css/font-awesome.css",
-                     "_static/css/jquery.fancybox.css",
-                     "_static/css/jquery.fancybox-thumbs.css",
-                     "_static/css/style.css"]);
-
-    var minifiedCss = cleanCSS.process(inCss, {
-        removeEmpty: true,
-        keepSpecialComments: 0
-    });
-
-    writeText(buildTarget + "_static/css/pack.css", minifiedCss);
-
-    // font-awesome-ie7.min.css
-
-    var fontAwesomeIE7 = cleanCSS.process(cat("_static/css/font-awesome-ie7.css"), {
-        removeEmpty: true,
-        keepSpecialComments: 0
-    });
-
-    writeText(buildTarget + "_static/css/font-awesome-ie7.min.css", fontAwesomeIE7);
-
-    echo();
-    echo("### Combining js files...");
-
-    var inJs = cat(["_static/js/plugins.js",
-                    "_static/js/bootstrap.js",
-                    "_static/js/jquery.mousewheel.js",
-                    "_static/js/jquery.fancybox.js",
-                    "_static/js/jquery.fancybox-thumbs.js"]);
-
-    var minifiedJs = uglifyJS.minify(inJs, {
-        compress: true,
-        fromString: true, // this is needed to pass JS source code instead of filenames
-        mangle: true,
-        warnings: false
-    });
-
-    writeText(buildTarget + "_static/js/pack.js", minifiedJs.code);
-
-    // JS for IE < 9
-    var inJsIE = cat(["_static/js/html5shiv.js",
-                      "_static/js/respond.js"]);
-
-    var minifiedJsIE = uglifyJS.minify(inJsIE, {
-        compress: true,
-        fromString: true, // this is needed to pass JS source code instead of filenames
-        mangle: true,
-        warnings: false
-    });
-
-    writeText(buildTarget + "_static/js/html5shiv-respond.min.js", minifiedJsIE.code);
-
-    echo();
-    echo("### Build finished. The HTML pages are in" + " " + buildTarget + ".");
-}
-
-
 (function () {
     /*jshint -W108*/
     var SPHINXOPTS = '-d' + ' "' + buildDir + 'doctrees/' + '" "' + srcDir + '" "' + buildTarget + '"';
@@ -120,9 +45,10 @@ function minify() {
             "_static/*.gif",
             "_static/*.js",
             "_static/*.png",
-            "_static/img/cloudvps.png",
-            "_static/css/*.css",
+            "_static/404.html",
             "_static/favicon.ico",
+            "_static/css/*.css",
+            "_static/img/cloudvps.png",
             "_static/js/*.js",
             "genindex",
             "objects.inv",
@@ -134,33 +60,10 @@ function minify() {
 
 
         echo();
-        echo("### Copying files...");
 
-        cd(srcDir);
-
-        var filesToCopyToDist = [
-            "robots.txt",
-            "version.txt",
-            "_static/apple-touch-icon*.png",
-            "_static/favicon.ico"
-        ];
-
-        cp("-f", filesToCopyToDist, buildTarget);
-        cp("-f", ["_static/js/selectivizr-min.js", "_static/js/jquery-*.min.js"], buildTarget + "_static/js");
-
-        minify();
-
-    };
+        exec("grunt");
 
 
-    //
-    // make clean
-    //
-    target.clean = function () {
-        cd(rootDir);
-        echo();
-        echo("### Cleaning build...");
-        rm("-rf", buildDir);
     };
 
 
@@ -173,22 +76,13 @@ function minify() {
 
 
     //
-    // make rebuild
-    //
-    target.rebuild = function () {
-        target.clean();
-        target.website();
-    };
-
-
-    //
     // make server
     //
     target.server = function () {
         echo();
         echo("### Starting webserver...");
         cd(buildTarget);
-        exec("python -u -m SimpleHTTPServer", {async: true});
+        exec("grunt connect");
     };
 
 
@@ -199,8 +93,6 @@ function minify() {
         echo("Available targets:");
         echo("  website  builds the website");
         echo("  server   starts the webserver");
-        echo("  clean    cleans the built website");
-        echo("  rebuild  rebuilds the website");
         echo("  help     shows this help message");
     };
 

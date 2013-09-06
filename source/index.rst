@@ -10,11 +10,11 @@
     </p>
 
     <div class="text-center">
-        <a href="http://sourceforge.net/projects/mpc-hc/files/MPC%20HomeCinema%20-%20Win32/MPC-HC_v1.6.8_x86/MPC-HC.1.6.8.x86.exe/download"
+        <a href="http://sourceforge.net/projects/mpc-hc/files/MPC%20HomeCinema%20-%20Win32/MPC-HC_v@@MPC_HC_SHORT_VERSION_x86/MPC-HC.@@MPC_HC_SHORT_VERSION.x86.exe/download"
             class="btn btn-inverse btn-large sourceforge_accelerator_link">
             <i class="icon-white icon-download-alt pull-left"></i>MPC-HC - Download now!
         </a>
-        <p>1.6.8 32-bit - <a href="/downloads/">Other systems &amp; versions</a></p>
+        <p>@@MPC_HC_SHORT_VERSION 32-bit - <a href="/downloads/">Other systems &amp; versions</a></p>
     </div>
 
     <hr class="thumbs">

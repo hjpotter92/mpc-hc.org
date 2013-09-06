@@ -1,6 +1,6 @@
 {
   "name": "mpc-hc-website",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "author": "MPC-HC Team (https://github.com/mpc-hc/website)",
   "description": "The dependencies to build MPC-HC's website",
   "homepage": "https://github.com/mpc-hc/website",
@@ -12,39 +12,19 @@
     "url": "https://github.com/mpc-hc/website/issues"
   },
   "license": "MIT",
-  "main": "make.js",
-  "readmeFilename": "Readme.md",
   "scripts": {
-    "check": "node run-tests",
-    "lint": "node run-tests"
+    "test": "grunt csslint"
   },
   "dependencies": {
-    "clean-css": "~1.1.1",
-    "csslint": "~0.9.10",
-    "jshint": "~2.1.9",
-    "shelljs": "~0.2.0",
-    "uglify-js": "~2.4.0"
-  },
-  "jshintConfig": {
-    "bitwise": true,
-    "boss": true,
-    "browser": false,
-    "camelcase": true,
-    "curly": true,
-    "eqeqeq": true,
-    "indent": 4,
-    "latedef": true,
-    "multistr": true,
-    "noarg": true,
-    "node": true,
-    "noempty": true,
-    "plusplus": false,
-    "quotmark": "double",
-    "regexp": true,
-    "shelljs": true,
-    "strict": true,
-    "trailing": true,
-    "unused": true
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-connect": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.0",
+    "grunt-contrib-csslint": "~0.1.2",
+    "grunt-contrib-cssmin": "~0.6.1",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-include-replace": "~1.1.0",
+    "shelljs": "~0.2.0"
   },
   "engines": {
     "node": "~0.8.0"
